@@ -5,7 +5,7 @@ import com.client.ws.wsapi.model.SubscriptionType;
 
 import java.util.List;
 
-public interface SubscritptionTypeService {
+public interface SubscriptionTypeService {
 
     List<SubscriptionType> findAll();
 

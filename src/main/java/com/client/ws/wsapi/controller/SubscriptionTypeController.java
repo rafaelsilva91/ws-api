@@ -2,7 +2,7 @@ package com.client.ws.wsapi.controller;
 
 import com.client.ws.wsapi.dto.SubscriptionTypeDto;
 import com.client.ws.wsapi.model.SubscriptionType;
-import com.client.ws.wsapi.service.SubscritptionTypeService;
+import com.client.ws.wsapi.service.SubscriptionTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import java.util.List;
 public class SubscriptionTypeController {
 
     @Autowired
-    private SubscritptionTypeService _service;
+    private SubscriptionTypeService _service;
 
     @GetMapping
     public ResponseEntity<List<SubscriptionType>> findAll() {
