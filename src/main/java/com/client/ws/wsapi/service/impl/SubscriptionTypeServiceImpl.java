@@ -54,7 +54,7 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
         return subscriptionTypeRepository.save(SubscriptionType.builder()
                 .id(id)
                 .name(dto.getName() != null ? dto.getName() : object.getName())
-                .accessMonth(dto.getAccessMonth() != null ? dto.getAccessMonth() : object.getAccessMonth())
+                .accessMonths(dto.getAccessMonths() != null ? dto.getAccessMonths() : object.getAccessMonths())
                 .price(dto.getPrice() != null ? dto.getPrice() : object.getPrice())
                 .productKey(dto.getProductKey() != null ? dto.getProductKey() : object.getProductKey())
                 .build());

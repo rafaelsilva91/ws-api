@@ -5,10 +5,14 @@ import com.client.ws.wsapi.exceptions.BadRequestException;
 import com.client.ws.wsapi.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
@@ -33,6 +37,28 @@ public class ApiExceptionHandler {
                 .timestamp(System.currentTimeMillis())
                 .path(request.getRequestURI())
                 .build());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponseDto> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e,
+                                                                                   HttpServletRequest request) {
+        Map<String, String> messages = new HashMap<>();
+        e.getBindingResult()
+                .getAllErrors().forEach(error ->{
+                    String field = ((FieldError) error).getField();
+                    String defaultMessage = error.getDefaultMessage();
+                    messages.put(field, defaultMessage);
+                });
+
+        ErrorResponseDto errorResponseDto = ErrorResponseDto.builder()
+                .message(Arrays.toString(messages.entrySet().toArray()))
+                .httpStatus(HttpStatus.BAD_REQUEST)
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .timestamp(System.currentTimeMillis())
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDto);
     }
 
 //    @ExceptionHandler(DataIntegrityViolationException.class)
