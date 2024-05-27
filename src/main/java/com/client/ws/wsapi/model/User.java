@@ -22,13 +22,19 @@ public class User implements Serializable {
     private static final long serialVersionUID = 4332102691397042335L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "users_id")
     private Long id;
 
     private String name;
+
+    @Column(unique = true)
     private String email;
+
+    @Column(unique = true)
     private String phone;
+
+    @Column(unique = true)
     private String cpf;
 
     @Column(name = "dt_subscription")
